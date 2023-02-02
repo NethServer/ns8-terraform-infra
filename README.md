@@ -1,7 +1,7 @@
 # DigitalOcean terraform NS8 cluster environment 
 
 Terraform configuration for create set of Droplets to use as base for create a NS8 cluster.
-The droplets will be created with DNS records lready configured,
+The droplets will be created with DNS records already configured,
 but the NS8 system must be installed and configured manually.
 
 ## Variables
