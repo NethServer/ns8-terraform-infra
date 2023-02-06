@@ -1,7 +1,7 @@
 # DigitalOcean terraform NS8 cluster environment 
 
 Terraform configuration for create set of Droplets to use as base for create a NS8 cluster.
-The droplets will be created with DNS records and DigitalOcean firewall already configured,
+The droplets will be created with DNS records already configured,
 but the NS8 system must be installed and configured manually.
 
 ## Variables
@@ -70,12 +70,6 @@ workspaces. E.g.:
     terraform apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"dn5":"ams3","dn6":"sfo3","dn7":"sgp1"}'
     terraform workspace select cluster0
     terraform apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"dn1":"ams3","dn2":"sfo3"}'
-
-## Shared firewall configuration
-
-A shared firewall resource is applied to each node of `cluster0`. If a
-different firewall configuration is required by some node, create another
-firewall resource and assign it to that node.
 
 ## Default SSH keys pair
 
