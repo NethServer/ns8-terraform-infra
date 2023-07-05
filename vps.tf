@@ -1,7 +1,7 @@
 locals {
   //Map host name code to OS image
   images = {
-    "dn" = "debian-11-x64",
+    "dn" = "debian-12-x64",
     "cs" = "centos-stream-9-x64",
     "rl" = "rockylinux-9-x64",
     "al" = "almalinux-9-x64",
