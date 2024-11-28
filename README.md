@@ -1,6 +1,6 @@
-# DigitalOcean terraform NS8 cluster environment 
+# DigitalOcean OpenTofu NS8 cluster environment
 
-Terraform configuration for create set of Droplets to use as base for create a NS8 cluster.
+OpenTofu configuration for create set of Droplets to use as base for create a NS8 cluster.
 The droplets will be created with DNS records already configured,
 but the NS8 system must be installed and configured manually.
 
@@ -9,7 +9,7 @@ but the NS8 system must be installed and configured manually.
 * `do_token`: DigitalOcean token.
 * `sshkey`: DigitalOcean ssh public key to use (optional).
    If your private key is password-protected, do not set this variable and use the SSH automatically generated
-   by terraform.
+   by OpenTofu.
 * `project`: DigitalOcean project where to create the droplets.
 * `domain`: DigitalOcean domain where to create the DNS records.
 * `leader_node`: The leader node (optional).
@@ -31,7 +31,7 @@ The variable `leader_node` represents the leader node and the `worker_nodes` rep
 
 ## Examples
 
-Download and install [Terraform](https://www.terraform.io/downloads), then follow below steps.
+Download and install [OpenTofu](https://opentofu.org/docs/intro/install/), then follow below steps.
 
 1. Create a `configs.auto.tfvars` file, like the following:
 
@@ -42,39 +42,39 @@ Download and install [Terraform](https://www.terraform.io/downloads), then follo
 
 2. Install required plugins
 
-       terraform init
+       tofu init
 
 3. Create and select a new workspace `cluster0`
 
-       terraform workspace new cluster0
+       tofu workspace new cluster0
 
 4. Create two nodes for `cluster0`
 
-       terraform apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"cs1":"sfo3"}'
+       tofu apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"cs1":"sfo3"}'
        # -> dn1.leader.cluster0.dp.nethserver.net
        # -> cs1.worker.cluster0.dp.nethserver.net
 
 5. Add another node to it:
 
-       terraform apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"cs1":"sfo3","cs2:"lon1"}'
+       tofu apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"cs1":"sfo3","cs2:"lon1"}'
        # -> cs2.worker.cluster0.dp.nethserver.net
 
 6. Destroy the cluster
 
-       terraform destroy
+       tofu destroy
 
-To work with multiple cluster instances just add more Terraform
+To work with multiple cluster instances just add more OpenTofu
 workspaces. E.g.:
 
-    terraform workspace new cluster1
-    terraform apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"dn5":"ams3","dn6":"sfo3","dn7":"sgp1"}'
-    terraform workspace select cluster0
-    terraform apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"dn1":"ams3","dn2":"sfo3"}'
+    tofu workspace new cluster1
+    tofu apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"dn5":"ams3","dn6":"sfo3","dn7":"sgp1"}'
+    tofu workspace select cluster0
+    tofu apply -var 'leader_node={"dn1":"ams3"}' -var 'worker_nodes={"dn1":"ams3","dn2":"sfo3"}'
 
 ## Default SSH keys pair
 
 A pair of public and private key will be crated and installed on the cluster, for retrive the private key
 and use it:
 
-    terraform output -raw deploy-key  > key
+    tofu output -raw deploy-key  > key
     chmod 0600 key
